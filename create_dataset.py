@@ -2,17 +2,18 @@
 bing_key_1='1ebb8bc96d5a41a29e6030a9b0932642'
 bing_key_2 = 'b41d1be5be94e5b8a7fc2b13bc95b1b'
 
-from requests import exceptions
 import argparse
-import requests
-#import opencv as cv2
-import matplotlib.image as cv2
+import imageio
+# import opencv as cv2
 import os
+
+import requests
+from requests import exceptions
 
 bing_key_1='1ebb8bc96d5a41a29e6030a9b0932642'
 bing_key_2 = 'b41d1be5be94e5b8a7fc2b13bc95b1b'
 API_KEY = bing_key_1
-MAX_RESULTS = 250
+MAX_RESULTS = 1000
 GROUP_SIZE = 50
 # set the endpoint API URL
 URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
@@ -94,16 +95,6 @@ def main():
                 if type(e) in EXCEPTIONS:
                     print("[INFO] skipping: {}".format(v["contentUrl"]))
                     continue
-
-            # try to load the image from disk
-            image = cv2.imread(p)
-
-            # if the image is `None` then we could not properly load the
-            # image from disk (so it should be ignored)
-            if image is None:
-                print("[INFO] deleting: {}".format(p))
-                os.remove(p)
-                continue
 
             # update the counter
             total += 1
